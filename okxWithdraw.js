@@ -38,7 +38,7 @@ function getRandomNumber(min, max, fixed) {
           chain: chain,
           toAddr: wallet.address
         };
-  
+
         const timestamp = Date.now() / 1000;
         const method = 'POST';
         const requestPath = '/api/v5/asset/withdrawal';
@@ -47,6 +47,10 @@ function getRandomNumber(min, max, fixed) {
         headers['OK-ACCESS-SIGN'] = signature(timestamp.toString(), method, requestPath, body, config.secretKey);
   
         const response = await axios.post(endpoint, withdrawalParams, { headers });
+
+        if (response.data.msg && response.data.msg.length > 0) {
+          throw new Error(`Error : ${response.data.msg}`);
+        }
 
         console.log('\x1b[32m%s\x1b[0m', `Withdrawal successful!`);
         console.log(`Withdrawn ${withdrawalParams.amt} ${withdrawalParams.ccy} to ${withdrawalParams.toAddr} on chain ${withdrawalParams.chain}`);
@@ -58,7 +62,7 @@ function getRandomNumber(min, max, fixed) {
         console.log("")
       }
     } catch (error) {
-    //   console.log('\x1b[31m%s\x1b[0m', `Withdrawal failed:`, error.message);
+      console.log('\x1b[31m%s\x1b[0m', `Withdrawal failed:`, error.message);
       console.log('\x1b[31m%s\x1b[0m', `Withdrawal failed: ${withdrawalParams.amt} ${withdrawalParams.ccy} to ${withdrawalParams.toAddr} on chain ${withdrawalParams.chain}`, error);
     }
   }
