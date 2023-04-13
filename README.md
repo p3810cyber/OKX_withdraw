@@ -20,7 +20,7 @@ This script allows you to withdraw from OKX MAIN balance to multiple wallets. Ca
 1) Download ZIP and extract it to a folder or clone the repo.
 2) Install node.js: `https://nodejs.org/en/` (LTS)
 3) Setup your settings in `config.js` (set correct fee for necessary network!!)
-4) Paste your wallets to `wallets.txt` file, each wallet on a new line
+4) Paste your wallets to `wallets.json` file, each wallet on a new line
 5) Open folder with the bot in `cmd`
 ```bash
 cd <path to folder with script>
